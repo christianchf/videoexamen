@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Ficha;
+use app\models\Persona;
 use app\models\FichaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -87,8 +88,10 @@ class FichasController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $personas = Persona::find()->select('nombre, id')->orderBy('nombre')->indexBy('id')->column();
             return $this->render('update', [
                 'model' => $model,
+                'personas' => $personas,
             ]);
         }
     }
