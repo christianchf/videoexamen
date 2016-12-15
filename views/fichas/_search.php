@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'duracion') ?>
 
-    <?= $form->field($model, 'director_id') ?>
+    <?= $form->field($model, 'director') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

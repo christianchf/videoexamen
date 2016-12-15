@@ -18,7 +18,8 @@ class FichaSearch extends Ficha
     public function rules()
     {
         return [
-            [['id', 'duracion', 'director_id'], 'integer'],
+            [['id', 'duracion'], 'integer'],
+            [['director_id'], 'safe'],
             [['titulo'], 'safe'],
             [['anyo'], 'number'],
         ];
@@ -63,7 +64,7 @@ class FichaSearch extends Ficha
             'id' => $this->id,
             'anyo' => $this->anyo,
             'duracion' => $this->duracion,
-            'director_id' => $this->director_id,
+            'director' => $this->director_id,
         ]);
 
         $query->andFilterWhere(['like', 'titulo', $this->titulo]);

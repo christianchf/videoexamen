@@ -69,8 +69,10 @@ class FichasController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $personas = Persona::find()->select('nombre, id')->orderBy('nombre')->indexBy('id')->column();
             return $this->render('create', [
                 'model' => $model,
+                'personas' => $personas,
             ]);
         }
     }
