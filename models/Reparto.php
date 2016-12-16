@@ -31,8 +31,8 @@ class Reparto extends \yii\db\ActiveRecord
         return [
             [['ficha_id', 'persona_id'], 'required'],
             [['ficha_id', 'persona_id'], 'integer'],
-            [['ficha_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fichas::className(), 'targetAttribute' => ['ficha_id' => 'id']],
-            [['persona_id'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['persona_id' => 'id']],
+            [['ficha_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ficha::className(), 'targetAttribute' => ['ficha_id' => 'id']],
+            [['persona_id'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['persona_id' => 'id']],
         ];
     }
 
@@ -52,7 +52,7 @@ class Reparto extends \yii\db\ActiveRecord
      */
     public function getFicha()
     {
-        return $this->hasOne(Fichas::className(), ['id' => 'ficha_id'])->inverseOf('repartos');
+        return $this->hasOne(Ficha::className(), ['id' => 'ficha_id'])->inverseOf('repartos');
     }
 
     /**
@@ -60,6 +60,6 @@ class Reparto extends \yii\db\ActiveRecord
      */
     public function getPersona()
     {
-        return $this->hasOne(Personas::className(), ['id' => 'persona_id'])->inverseOf('repartos');
+        return $this->hasOne(Persona::className(), ['id' => 'persona_id'])->inverseOf('repartos');
     }
 }

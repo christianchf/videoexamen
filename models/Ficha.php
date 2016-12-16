@@ -75,7 +75,7 @@ class Ficha extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPersonas()
+    public function getActuan()
     {
         return $this->hasMany(Persona::className(), ['id' => 'persona_id'])->viaTable('reparto', ['ficha_id' => 'id']);
     }
