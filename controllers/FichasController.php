@@ -126,4 +126,30 @@ class FichasController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionGestionar($ficha_id = null)
+    {
+        $model = new FichaForm;
+        $personas = [];
+        $fichas = Ficha::find()->select(['titulo', 'id'])->indexBy('id')->column();
+        if ($ficha_id !== null) {
+            $model->ficha_id = $ficha_id;
+            if ($model->validate()) {
+                $reparto = Ficha::findOne(['id' => $ficha_id])->actuan;
+                $personas = Persona::find()->select(['nombre', 'id'])->indexBy('id')->column();
+                return $this->render('gestionar', [
+                    'model' => $model,
+                    'fichas' => $fichas,
+                    'personas' => $personas,
+                    'reparto' => $reparto,
+                ]);
+            }
+        } else {
+            return $this->render('gestionar', [
+                'model' => $model,
+                'fichas' => $fichas,
+                'personas' => $personas,
+            ]);
+        }
+    }
 }

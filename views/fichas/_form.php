@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'duracion')->textInput() ?>
 
-    <?= $form->field($model, 'director_id')->dropDownList($personas) ?>
+    <?= $form->field($model, 'director_id')->textInput()->dropDownList($personas) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -12,6 +12,7 @@ use app\models\Ficha;
  */
 class FichaSearch extends Ficha
 {
+    public $director;
     /**
      * @inheritdoc
      */
@@ -19,8 +20,7 @@ class FichaSearch extends Ficha
     {
         return [
             [['id', 'duracion'], 'integer'],
-            [['director_id'], 'safe'],
-            [['titulo'], 'safe'],
+            [['titulo', 'director'], 'safe'],
             [['anyo'], 'number'],
         ];
     }
@@ -43,15 +43,21 @@ class FichaSearch extends Ficha
      */
     public function search($params)
     {
-        $query = Ficha::find();
+        $query = Ficha::find()->joinWith('director');
 
         // add conditions that should always apply here
+        $this->load($params);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['director'] = [
+           // The tables are the ones our relation are configured to
+           // in my case they are prefixed with "tbl_"
+           'asc' => ['personas.nombre' => SORT_ASC],
+           'desc' => ['personas.nombre' => SORT_DESC],
+        ];
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -64,10 +70,11 @@ class FichaSearch extends Ficha
             'id' => $this->id,
             'anyo' => $this->anyo,
             'duracion' => $this->duracion,
-            'director' => $this->director_id,
+            //'director' => $this->director_id,
         ]);
 
-        $query->andFilterWhere(['like', 'titulo', $this->titulo]);
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+              ->andFilterWhere(['like', 'personas.nombre', $this->director]);
 
         return $dataProvider;
     }
